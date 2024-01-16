@@ -1,24 +1,37 @@
-import { credential, app, initializeApp } from "firebase-admin";
+import { cert, App, initializeApp } from 'firebase-admin/app';
+import { messaging } from 'firebase-admin';
 
 const googleServiceJson = require('../../../firebase-admin.json');
 
 export default class FirebaseAdmin {
 
-    private app: app.App;
+    private app : App;
 
     constructor(){
-        const _credential = credential.cert(googleServiceJson);
-        this.app = initializeApp({credential: _credential});
+
+        this.app = initializeApp({ credential: cert(googleServiceJson) });
+                
     }
 
-    sendPushNotification(token: string){
-        this.app.messaging().send({
-            token,
-            notification:{
-                title: 'fcm',
-                body: 'this is a test',
-            }
+    sendPushNotificationToTopic(topic: string){
+
+        const registrationToken = 'YOUR_REGISTRATION_TOKEN';
+
+        const message = {
+            data: {
+            },
+            token: registrationToken
+        };
+
+        messaging().send(message)
+        .then((response) => {
+          // Response is a message ID string.
+          console.log('Successfully sent message:', response);
         })
+        .catch((error) => {
+          console.log('Error sending message:', error);
+        });
+
     }
 
 }
