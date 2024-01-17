@@ -8,12 +8,13 @@ class FirebaseAdmin {
         this.app = (0, app_1.initializeApp)({ credential: (0, app_1.cert)(googleServiceJson) });
     }
     sendPushNotificationToTopic(topic) {
-        const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-        const message = {
-            data: {},
-            token: registrationToken
-        };
-        (0, firebase_admin_1.messaging)().send(message)
+        (0, firebase_admin_1.messaging)().send({
+            topic,
+            notification: {
+                title: 'Primera notificación desde el Backend',
+                body: '¡Enhorabuena! Has enviado tu primera notificación desde el Backend.'
+            }
+        })
             .then((response) => {
             // Response is a message ID string.
             console.log('Successfully sent message:', response);

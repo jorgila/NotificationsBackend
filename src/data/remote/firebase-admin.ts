@@ -15,15 +15,14 @@ export default class FirebaseAdmin {
 
     sendPushNotificationToTopic(topic: string){
 
-        const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-
-        const message = {
-            data: {
-            },
-            token: registrationToken
-        };
-
-        messaging().send(message)
+        messaging().send({
+          topic,
+          notification:{
+              title: 'Primera notificación desde el Backend',
+              body: '¡Enhorabuena! Has enviado tu primera notificación desde el Backend.'
+            }
+          }
+        )
         .then((response) => {
           // Response is a message ID string.
           console.log('Successfully sent message:', response);
@@ -31,7 +30,6 @@ export default class FirebaseAdmin {
         .catch((error) => {
           console.log('Error sending message:', error);
         });
-
     }
 
 }

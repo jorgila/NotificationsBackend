@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const promos_router_1 = __importDefault(require("./promos-router"));
 exports.default = (app) => {
     app.get('/', (req, res) => res.send('HELLO'));
-    app.use('/api/v1/promos', (0, promos_router_1.default)());
+    app.use('/api/v1/promos/', (0, promos_router_1.default)());
 };
